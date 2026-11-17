@@ -343,8 +343,7 @@ function almMatcher(fam){ var F=up(fam).replace(/\s+/g,''), m, s2=function(x){ r
   if((m=F.match(/^1X(\d+)\/([CP])#([\d,\.]+)MM/))){ var tk=m[1]+m[2]+'X'+m[3].replace(',','.')+'MM2', kv=m[2]==='C'; return function(x){ return up(x.u)==='M'&&s2(x)===tk&&(!kv||/1KV/.test(D(x).replace(/\s+/g,''))); }; }
   return null; }
 function almAuto(fam){ var f=almMatcher(fam); if(!f||!ALM) return []; var c=ALM.mat.filter(f); if(!c.length) return [];
-  if(c.every(function(x){ return up(x.u)!=='M'; })) return c.map(function(x){ return x.c; });
-  c.sort(function(a,b){ return (almQty(b)||0)-(almQty(a)||0); }); return [c[0].c]; }
+  c.sort(function(a,b){ return (almQty(b)||0)-(almQty(a)||0); }); return c.map(function(x){ return x.c; }); }
 function almCands(fam){ var f=almMatcher(fam); return f&&ALM?ALM.mat.filter(f):[]; }
 function cvM(x){ return typeof x==='number'?x:(parseFloat(String(x||'').replace(',','.'))||0); }
 function parseAlm(wb,nome){ var sn=wb.SheetNames.filter(function(n){ return /MAPA/i.test(n); })[0]||wb.SheetNames[0], ws=wb.Sheets[sn];
