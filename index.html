@@ -154,7 +154,7 @@ table.rf td.editing input.consin{width:150px;text-align:left}table.rf td.neg{col
 <body>
 <header class="top"><div class="wrap top-inner">
   <h1>Controle de cabos <small id="hdSmall">instrumentação</small> <span class="ro-tag">somente visualização</span></h1>
-  <nav class="tabs" id="tabs"><div class="dd" id="dd"><button class="dd-btn on" id="ddBtn" aria-haspopup="true" aria-expanded="false">Cabos de instrumentação<span id="ddCur"></span> <span class="car">▾</span></button><div class="dd-menu" id="ddMenu" role="menu"><button data-v="uda" role="menuitem">UDA - Cabos</button><button data-v="resumo" role="menuitem">Resumo</button></div></div><div class="dd" id="tdd"><button class="dd-btn " id="tddBtn" aria-haspopup="true" aria-expanded="false">Telecom<span id="tddCur"></span> <span class="car">▾</span></button><div class="dd-menu" id="tddMenu" role="menu"><button data-v="tuda" role="menuitem">TCOM - Cabos</button><button data-v="tresumo" role="menuitem">Resumo</button><button data-v="tequip" role="menuitem">Equipamentos</button></div></div><button data-v="anexos">Anexos</button></nav>
+  <nav class="tabs" id="tabs"><div class="dd" id="dd"><button class="dd-btn on" id="ddBtn" aria-haspopup="true" aria-expanded="false">Instrumentação<span id="ddCur"></span> <span class="car">▾</span></button><div class="dd-menu" id="ddMenu" role="menu"><button data-v="uda" role="menuitem">UDA - Cabos</button><button data-v="resumo" role="menuitem">Resumo</button></div></div><div class="dd" id="tdd"><button class="dd-btn " id="tddBtn" aria-haspopup="true" aria-expanded="false">Telecom<span id="tddCur"></span> <span class="car">▾</span></button><div class="dd-menu" id="tddMenu" role="menu"><button data-v="tuda" role="menuitem">TCOM - Cabos</button><button data-v="tresumo" role="menuitem">Resumo</button><button data-v="tequip" role="menuitem">Equipamentos</button></div></div><button data-v="anexos">Anexos</button></nav>
 </div></header>
 <main class="wrap">
 <section id="v-uda">
@@ -339,7 +339,7 @@ var EQ0={"nome":"Contrato_Equipamentos_Telecom.xlsx","hd":["TAG","DESCRIÇÃO","
 (function(){
 'use strict';
 var RO=/github\.io$/i.test(location.hostname)&&!/editar/i.test(location.hash); if(RO) document.body.classList.add('ro');
-var VER='17/11/2026 12:38'; try{ if(localStorage.getItem('ctrlCabos.ver')!==VER){ ['ctrlCabos.dados','ctrlCabos.tel.dados','ctrlCabos.mapa','ctrlCabos.alm','ctrlCabos.eq','ctrlCabos.ultimaCarga','ctrlCabos.tel.ultimaCarga'].forEach(function(k){ localStorage.removeItem(k); }); localStorage.setItem('ctrlCabos.ver',VER); } }catch(e){}
+var VER='17/11/2026 13:58'; try{ if(localStorage.getItem('ctrlCabos.ver')!==VER){ ['ctrlCabos.dados','ctrlCabos.tel.dados','ctrlCabos.mapa','ctrlCabos.alm','ctrlCabos.eq','ctrlCabos.ultimaCarga','ctrlCabos.tel.ultimaCarga'].forEach(function(k){ localStorage.removeItem(k); }); localStorage.setItem('ctrlCabos.ver',VER); } }catch(e){}
 function lsGet(k){ if(RO&&/(udaEdits|estoque|consag|dados|mapa)$/.test(k)) return null; return localStorage.getItem(k); }
 function up(s){ return String(s==null?'':s).trim().toUpperCase(); }
 function cvx(x){ if(x==null) return ''; if(x instanceof Date){ var d=x; return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear(); }
