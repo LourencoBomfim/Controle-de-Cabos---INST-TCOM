@@ -1,4 +1,4 @@
-# Controle de Cabos — Instrumentação e Telecom (U-12)
+# Controle de Instrumentação e TCOM (U-12)
 
 Painel em um único arquivo HTML (`index.html`) para acompanhar o lançamento de cabos.
 
