@@ -313,6 +313,8 @@ var ALM0={"nome":"2026.11.10_Mapa de suprimentos_UDA_Rev91.xlsx","linhas":9766,"
 (function(){
 'use strict';
 var RO=/github\.io$/i.test(location.hostname)&&!/editar/i.test(location.hash); if(RO) document.body.classList.add('ro');
+var VER='17/11/2026 08:40'; try{ if(localStorage.getItem('ctrlCabos.ver')!==VER){ ['ctrlCabos.dados','ctrlCabos.tel.dados','ctrlCabos.mapa','ctrlCabos.alm','ctrlCabos.ultimaCarga','ctrlCabos.tel.ultimaCarga'].forEach(function(k){ localStorage.removeItem(k); }); localStorage.setItem('ctrlCabos.ver',VER); } }catch(e){}
+function lsGet(k){ if(RO&&/(udaEdits|estoque|consag|dados|mapa)$/.test(k)) return null; return localStorage.getItem(k); }
 function up(s){ return String(s==null?'':s).trim().toUpperCase(); }
 function cvx(x){ if(x==null) return ''; if(x instanceof Date){ var d=x; return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear(); }
   if(typeof x==='number'){ return Number.isInteger(x)?x:Math.round(x*100)/100; } if(typeof x==='boolean') return x?'True':'False'; return String(x).replace(/\s+/g,' ').trim(); }
@@ -332,7 +334,7 @@ function parseUDA(wb){ var nm=wb.SheetNames, cab=null, res=null;
     for(var k=9;k<B.length;k++){ var q=B[k]||[]; var f=cvx(q[1]), d=cvx(q[2]); if(f&&d&&f!=='TOTAL GERAL') fam[f]={d:d,cod:cvx(q[12]),est:numx(q[10]),nec:numx(q[11])}; } }
   return {uda:uda,fam:fam}; }
 /* ---------- ESTOQUE DO ALMOXARIFADO ---------- */
-var ALM=ALM0, ALMC=null; try{ var a0=JSON.parse(localStorage.getItem('ctrlCabos.mapa')||'null'); if(a0&&a0.mat&&a0.mat.length){ ALM=a0; ALMC=a0; } }catch(e){}
+var ALM=ALM0, ALMC=null; try{ var a0=JSON.parse(lsGet('ctrlCabos.mapa')||'null'); if(a0&&a0.mat&&a0.mat.length){ ALM=a0; ALMC=a0; } }catch(e){}
 var ALMBY={}; (ALM&&ALM.mat||[]).forEach(function(m){ ALMBY[m.c]=m; });
 function almQty(m){ var q=m.E||0; if(up(m.u)!=='M'){ if(!m.len) return null; q=q*m.len; } return Math.round(q*100)/100; }
 function almMatcher(fam){ var F=up(fam).replace(/\s+/g,''), m, s2=function(x){ return up(x.s).replace(/\s+/g,''); }, D=function(x){ return up(x.d); };
@@ -396,14 +398,14 @@ var H0=['CABO Nº','ORIGEM','DESTINO','PROJETO (m)','METRAGEM REAL (m)','STATUS 
 var GRP0=['','','','','g2','g2','g2','g2','g2','g2','g3','g3','','','g4','g4','g4','g4','',''];
 var H=C.H||H0, GRP=C.GRP||GRP0, NUMC=C.NUMC;
 var COLS=C.COLS;
-var CARGA=null; try{ var st0=JSON.parse(localStorage.getItem(KP+'dados')||'null'); if(st0&&st0.uda&&st0.uda.length){ CARGA=st0; DATA.uda=st0.uda; if(st0.fam&&Object.keys(st0.fam).length) DATA.fam=st0.fam; DATA.fontes.uda=st0.nome; } }catch(e){}
+var CARGA=null; try{ var st0=JSON.parse(lsGet(KP+'dados')||'null'); if(st0&&st0.uda&&st0.uda.length){ CARGA=st0; DATA.uda=st0.uda; if(st0.fam&&Object.keys(st0.fam).length) DATA.fam=st0.fam; DATA.fontes.uda=st0.nome; } }catch(e){}
 var ROWS=DATA.uda.map(C.fill);
 var FAMD=DATA.fam||{};
 /* ---------- EDIÇÃO ---------- */
 var RAWUDA=DATA.uda, ORIG=ROWS.map(function(r){ return r.slice(); }), KEYS={}, EDITS={}, EK=KP+'udaEdits';
 ROWS.forEach(function(r,i){ var b=String(r[0]); KEYS[b]=(KEYS[b]||0)+1; r._k=b+'#'+KEYS[b]; r._i=i; });
 var BYKEY={}; ROWS.forEach(function(r){ BYKEY[r._k]=r; });
-function loadEdits(){ try{ EDITS=JSON.parse(localStorage.getItem(EK)||'{}')||{}; }catch(e){ EDITS={}; } applyEdits(); }
+function loadEdits(){ try{ EDITS=JSON.parse(lsGet(EK)||'{}')||{}; }catch(e){ EDITS={}; } applyEdits(); }
 function saveEdits(){ try{ localStorage.setItem(EK,JSON.stringify(EDITS)); }catch(e){ toast('Não foi possível salvar neste navegador. Use “Baixar backup das edições”.'); } }
 function applyEdits(){ ROWS.forEach(function(r,i){ var o=ORIG[i]; for(var j=0;j<o.length;j++) r[j]=o[j]; var e=EDITS[r._k]; if(e) for(var c in e) r[+c]=e[c]; }); }
 function isEd(r,j){ var e=EDITS[r._k]; return !!(e&&Object.prototype.hasOwnProperty.call(e,j)); }
@@ -472,7 +474,7 @@ $('exp').addEventListener('click',function(){ var t='﻿'+[COLS.map(function(j){
   var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([t],{type:'text/csv;charset=utf-8'})); a.download=C.slug+'-cabos-'+today()+'.csv'; document.body.appendChild(a); a.click(); setTimeout(function(){ URL.revokeObjectURL(a.href); a.remove(); },500); });
 
 $('sub').textContent='Mesmas informações da aba '+C.aba+' da planilha '+DATA.fontes.uda+' · clique no título de uma coluna para ordenar';
-$('foot').textContent='Fonte: '+DATA.fontes.uda+' (aba '+C.aba+', '+fmt(ROWS.length,0)+' linhas)'+(CARGA?' · planilha anexada em '+CARGA.em:'')+'.';
+$('foot').textContent='Fonte: '+DATA.fontes.uda+' (aba '+C.aba+', '+fmt(ROWS.length,0)+' linhas)'+(CARGA?' · planilha anexada em '+CARGA.em:'')+' · versão publicada em '+VER+'.';
 /* ---------- ANEXOS: carga da planilha UDA no navegador ---------- */
 function keysOf(uda){ var c={}, m={}; uda.forEach(function(r){ var b=String(r[0]); c[b]=(c[b]||0)+1; m[b+'#'+c[b]]=C.fill(r); }); return m; }
 function resumoNums(uda){ var n=0,nr=0,real=0; uda.forEach(function(r){ n++; if(concl(r)){ nr++; var p=num(r[C.ip])||0,m=num(r[C.ir])||0; real+=(m>0?m:p); } }); return {n:n,nr:nr,real:real}; }
@@ -586,8 +588,8 @@ function cabSVG(s){ var o='', x0=70, W=168, H=52, cy=26;
   if(sp) o+='<text x="'+(jx+(W-jx)/2+2)+'" y="'+(cy+4)+'" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Archivo,sans-serif">'+n+'P</text>';
   return '<svg viewBox="0 0 '+W+' '+H+'" width="126" height="39" role="img" aria-label="'+esc(s.cap)+'"><defs><pattern id="br" width="4" height="4" patternUnits="userSpaceOnUse"><rect width="4" height="4" fill="#c9a36a"/><path d="M0,0 L4,4 M4,0 L0,4" stroke="#8c6a35" stroke-width=".8"/></pattern></defs>'+o+'</svg>'; }
 /* ---------- RESUMO POR FAMÍLIA (fórmulas da aba RESUMO da UDA) ---------- */
-var CONS={}; try{ CONS=JSON.parse(localStorage.getItem(KP+'consag')||'{}')||{}; }catch(e){}
-var RF=[], EST={}, ESTK=KP+'estoque'; try{ EST=JSON.parse(localStorage.getItem(ESTK)||'{}')||{}; }catch(e){ EST={}; }
+var CONS={}; try{ CONS=JSON.parse(lsGet(KP+'consag')||'{}')||{}; }catch(e){}
+var RF=[], EST={}, ESTK=KP+'estoque'; try{ EST=JSON.parse(lsGet(ESTK)||'{}')||{}; }catch(e){ EST={}; }
 function saveEst(){ try{ localStorage.setItem(ESTK,JSON.stringify(EST)); }catch(e){ toast('Não foi possível salvar o estoque neste navegador.'); } }
 function resumoCalc(){ var ord=Object.keys(FAMD), F={};
   ord.forEach(function(k){ var e0=FAMD[k].est||0, cods=[], tip=''; if(C.alm){ cods=CONS[k]||almAuto(k); var tot=null; cods.forEach(function(c){ var m=ALMBY[c]; if(!m) return; var q=almQty(m); if(q==null) return; tot=(tot||0)+q; tip+=c+' · '+(m.s||m.d.slice(0,40))+'\nEntregue concluído (BA) '+fmt(m.E,0)+' '+m.u+(m.len?' × '+fmt(m.len,1)+' m/peça':'')+' = '+fmt(q,0)+' m · total RM (Q) '+fmt(m.Q,0)+' '+m.u+(m.nc<m.n?' · '+(m.n-m.nc)+' linha(s) não concluída(s) = 0':'')+'\n'; }); if(tot!=null) e0=Math.round(tot*100)/100; }
