@@ -339,7 +339,8 @@ var EQ0={"nome":"Contrato_Equipamentos_Telecom.xlsx","hd":["TAG","DESCRIÇÃO","
 (function(){
 'use strict';
 var RO=/github\.io$/i.test(location.hostname)&&!/editar/i.test(location.hash); if(RO) document.body.classList.add('ro');
-var VER='17/11/2026 14:12'; try{ if(localStorage.getItem('ctrlCabos.ver')!==VER){ ['ctrlCabos.dados','ctrlCabos.tel.dados','ctrlCabos.mapa','ctrlCabos.alm','ctrlCabos.eq','ctrlCabos.ultimaCarga','ctrlCabos.tel.ultimaCarga'].forEach(function(k){ localStorage.removeItem(k); }); localStorage.setItem('ctrlCabos.ver',VER); } }catch(e){}
+var VER='17/11/2026 14:25'; try{ if(localStorage.getItem('ctrlCabos.ver')!==VER){ ['ctrlCabos.dados','ctrlCabos.tel.dados','ctrlCabos.mapa','ctrlCabos.alm','ctrlCabos.eq','ctrlCabos.ultimaCarga','ctrlCabos.tel.ultimaCarga'].forEach(function(k){ localStorage.removeItem(k); }); localStorage.setItem('ctrlCabos.ver',VER); } }catch(e){}
+if(/github\.io$/i.test(location.hostname)&&window.fetch){ try{ fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}).then(function(r){ return r.ok?r.text():''; }).then(function(t){ var m=/var VER='([^']*)'/.exec(t||''); if(m&&m[1]!==VER){ var k='ctrlCabos.reload'; if(sessionStorage.getItem(k)===m[1]) return; sessionStorage.setItem(k,m[1]); location.replace(location.pathname+'?v='+encodeURIComponent(m[1].replace(/\D/g,''))+location.hash); } }).catch(function(){}); }catch(e){} }
 function lsGet(k){ if(RO&&/(udaEdits|estoque|consag|dados|mapa)$/.test(k)) return null; return localStorage.getItem(k); }
 function up(s){ return String(s==null?'':s).trim().toUpperCase(); }
 function cvx(x){ if(x==null) return ''; if(x instanceof Date){ var d=x; return ('0'+d.getDate()).slice(-2)+'/'+('0'+(d.getMonth()+1)).slice(-2)+'/'+d.getFullYear(); }
