@@ -3,8 +3,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Controle de Instrumentação e TCOM</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   color-scheme: light;
@@ -174,7 +174,7 @@ body.ro #tab td[data-j]{cursor:default !important;outline:none !important}body.r
 table.rf td.cons{font-family:var(--mono);font-size:11.5px;white-space:normal;max-width:130px;cursor:pointer;text-decoration:underline dotted #1F5FD6;text-underline-offset:3px}
 table.rf td.cons.none{color:#9aa3ad;text-decoration:none}body.ro table.rf td.cons{cursor:default;text-decoration:none}
 table.rf td.editing input.consin{width:150px;text-align:left}table.rf td.neg{color:#B42318}
-</style></head>
+table.t th,table.t td,table.t td.n{text-align:center}</style></head>
 <body>
 <header class="top"><div class="wrap top-inner">
   <h1>Controle de Instrumentação e TCOM <small id="hdSmall">instrumentação</small> <span class="ro-tag">somente visualização</span></h1>
@@ -198,7 +198,7 @@ table.rf td.editing input.consin{width:150px;text-align:left}table.rf td.neg{col
       <span class="count" id="cnt"></span>
     </div>
     <div class="editbar"><span>✎ Clique numa célula para editar (status, metragem, bobina…). Alterações ficam salvas neste navegador e o resumo recalcula na hora.</span><span class="sp"></span><span id="edCnt"></span>
-      <button class="btn" id="edBak">Baixar backup das edições</button><button class="btn" id="edRes">Restaurar backup</button><button class="btn" id="edUndo">Desfazer todas as edições</button><input type="file" id="edFile" accept=".json,application/json" hidden=""></div>
+      <button class="btn" id="edBak">Baixar backup das edições</button><button class="btn" id="edRes">Restaurar backup</button><button class="btn" id="edUndo">Desfazer todas as edições</button><input type="file" id="edFile" accept=".json,application/json" hidden></div>
     <div class="tablewrap" id="tw"><table class="t" id="tab"></table></div>
     <div class="more" id="more"></div>
   </div>
@@ -230,14 +230,14 @@ table.rf td.editing input.consin{width:150px;text-align:left}table.rf td.neg{col
       <select id="tfFam" style="max-width:300px"><option value="">Todas as formações</option></select>
       <select id="tfLanc"><option value="">Avanço lançamento: todos</option><option value="CONCLUIDO">Concluído</option><option value="-">Pendente</option></select>
       <select id="tfTeste"><option value="">Status teste: todos</option></select>
-      <select id="tfSig" hidden=""><option value="">SIGEM: todos</option><option value="c">CTECRI aprovado</option><option value="cn">CTECRI não postado</option><option value="r">RILTCI aprovado</option><option value="rn">RILTCI não postado</option></select>
-      <select id="tfBob" hidden=""><option value="">Bobina: todas</option><option value="dif">Bobina real ≠ prevista</option><option value="ex">Cabo existente</option><option value="hold">BOB-PB-HOLD</option></select>
+      <select id="tfSig" hidden><option value="">SIGEM: todos</option><option value="c">CTECRI aprovado</option><option value="cn">CTECRI não postado</option><option value="r">RILTCI aprovado</option><option value="rn">RILTCI não postado</option></select>
+      <select id="tfBob" hidden><option value="">Bobina: todas</option><option value="dif">Bobina real ≠ prevista</option><option value="ex">Cabo existente</option><option value="hold">BOB-PB-HOLD</option></select>
       <button class="btn" id="texp">Exportar (Excel/CSV)</button>
       <button class="btn" id="tclr">Limpar filtros</button>
       <span class="count" id="tcnt"></span>
     </div>
     <div class="editbar"><span>✎ Clique numa célula para editar (status, metragem, programação…). Alterações ficam salvas neste navegador e o resumo recalcula na hora.</span><span class="sp"></span><span id="tedCnt"></span>
-      <button class="btn" id="tedBak">Baixar backup das edições</button><button class="btn" id="tedRes">Restaurar backup</button><button class="btn" id="tedUndo">Desfazer todas as edições</button><input type="file" id="tedFile" accept=".json,application/json" hidden=""></div>
+      <button class="btn" id="tedBak">Baixar backup das edições</button><button class="btn" id="tedRes">Restaurar backup</button><button class="btn" id="tedUndo">Desfazer todas as edições</button><input type="file" id="tedFile" accept=".json,application/json" hidden></div>
     <div class="tablewrap" id="ttw"><table class="t" id="ttab"></table></div>
     <div class="more" id="tmore"></div>
   </div>
@@ -279,7 +279,7 @@ table.rf td.editing input.consin{width:150px;text-align:left}table.rf td.neg{col
     <div class="card ax-card"><div class="ax-h">Plano de corte em uso</div><div id="pcAtual"></div><div id="pcMsg"></div></div>
     <div class="card ax-card">
       <div class="ax-h">Anexar plano de corte atualizado</div>
-      <label class="ax-drop" id="pcDrop"><input type="file" id="pcFile" accept=".xlsx,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden="">
+      <label class="ax-drop" id="pcDrop"><input type="file" id="pcFile" accept=".xlsx,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
         <span class="ax-ic">✂</span><b>Clique para escolher</b> ou arraste aqui a planilha<br><small>Lista de corte (.xlsx) · uma folha por página, com "Nº DE CIRCUITO" na coluna A; as folhas da mesma família (B2.1, B2.1 (2)…) são unidas</small></label>
       <button class="btn" id="pcReset">Voltar ao plano embutido no HTML</button>
     </div>
@@ -288,7 +288,7 @@ table.rf td.editing input.consin{width:150px;text-align:left}table.rf td.neg{col
     <div class="card ax-card"><div class="ax-h">Bobinas inspecionadas em uso</div><div id="biAtual"></div><div id="biMsg"></div></div>
     <div class="card ax-card">
       <div class="ax-h">Anexar resumo das bobinas inspecionadas</div>
-      <label class="ax-drop" id="biDrop"><input type="file" id="biFile" accept=".xlsx,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden="">
+      <label class="ax-drop" id="biDrop"><input type="file" id="biFile" accept=".xlsx,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
         <span class="ax-ic">🧵</span><b>Clique para escolher</b> ou arraste aqui a planilha<br><small>Resumo das bobinas inspecionadas (.xlsx) · colunas TAG e COMPRIM. PROJETO; o comprimento de projeto vira o comprimento da bobina no plano de corte</small></label>
       <button class="btn" id="biReset">Voltar à lista embutida no HTML</button>
     </div>
@@ -301,9 +301,9 @@ table.rf td.editing input.consin{width:150px;text-align:left}table.rf td.neg{col
     </div>
     <div class="card ax-card">
       <div class="ax-h">Anexar planilha UDA atualizada</div>
-      <label class="ax-drop" id="axDrop"><input type="file" id="axFile" accept=".xlsx,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden="">
+      <label class="ax-drop" id="axDrop"><input type="file" id="axFile" accept=".xlsx,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
         <span class="ax-ic">📎</span><b>Clique para escolher</b> ou arraste aqui a planilha<br><small>UDA - Controle de Cabos - Instrumentação (.xlsx), com as abas CABOS e RESUMO</small></label>
-      <label class="ax-chk"><input type="checkbox" id="axKeep" checked=""> Manter minhas edições de status/metragem e de estoque que ainda não estão na planilha nova</label>
+      <label class="ax-chk"><input type="checkbox" id="axKeep" checked> Manter minhas edições de status/metragem e de estoque que ainda não estão na planilha nova</label>
       <div class="ax-note">Edições que a planilha nova já traz com o mesmo valor são retiradas automaticamente.</div>
       <button class="btn" id="axReset">Voltar aos dados embutidos no HTML</button>
     </div>
@@ -318,9 +318,9 @@ table.rf td.editing input.consin{width:150px;text-align:left}table.rf td.neg{col
     </div>
     <div class="card ax-card">
       <div class="ax-h">Anexar planilha de telecom atualizada</div>
-      <label class="ax-drop" id="taxDrop"><input type="file" id="taxFile" accept=".xlsx,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden="">
+      <label class="ax-drop" id="taxDrop"><input type="file" id="taxFile" accept=".xlsx,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
         <span class="ax-ic">📎</span><b>Clique para escolher</b> ou arraste aqui a planilha<br><small>Acompanhamento_Cabos_Telecom (.xlsx), com as abas CABOS TCOM e RESUMO</small></label>
-      <label class="ax-chk"><input type="checkbox" id="taxKeep" checked=""> Manter minhas edições de status/metragem e de estoque que ainda não estão na planilha nova</label>
+      <label class="ax-chk"><input type="checkbox" id="taxKeep" checked> Manter minhas edições de status/metragem e de estoque que ainda não estão na planilha nova</label>
       <div class="ax-note">Edições que a planilha nova já traz com o mesmo valor são retiradas automaticamente.</div>
       <button class="btn" id="taxReset">Voltar aos dados embutidos no HTML</button>
     </div>
@@ -335,7 +335,7 @@ table.rf td.editing input.consin{width:150px;text-align:left}table.rf td.neg{col
     </div>
     <div class="card ax-card">
       <div class="ax-h">Anexar Mapa de Suprimentos atualizado</div>
-      <label class="ax-drop" id="almDrop"><input type="file" id="almFile" accept=".xlsx,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden="">
+      <label class="ax-drop" id="almDrop"><input type="file" id="almFile" accept=".xlsx,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
         <span class="ax-ic">📦</span><b>Clique para escolher</b> ou arraste aqui a planilha<br><small>Mapa de Suprimentos (.xlsx) · disciplina (col. F), código CONSAG (col. M), descrição (col. O), qtde total (col. Q), entregue (col. BA), status (col. DE)</small></label>
       <div class="ax-note" style="margin-top:10px">Só entram linhas com Disciplina = Telecomunicações. Estoque = soma da coluna BA das linhas com CONCLUÍDO na coluna DE; linhas não concluídas contam 0. Cordões e patch-cords vendidos por peça viram metros pelo comprimento da descrição. O estoque é usado no Resumo de telecom; o código CONSAG de cada família pode ser trocado clicando nele.</div>
       <button class="btn" id="almReset">Voltar ao estoque embutido no HTML</button>
@@ -346,7 +346,7 @@ table.rf td.editing input.consin{width:150px;text-align:left}table.rf td.neg{col
     <div class="card ax-card"><div class="ax-h">Lista em uso</div><div id="eqAtual"></div><div id="eqMsg"></div></div>
     <div class="card ax-card">
       <div class="ax-h">Anexar lista de equipamentos atualizada</div>
-      <label class="ax-drop" id="eqDrop"><input type="file" id="eqFile" accept=".xlsx,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden="">
+      <label class="ax-drop" id="eqDrop"><input type="file" id="eqFile" accept=".xlsx,.xlsm,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
         <span class="ax-ic">🖧</span><b>Clique para escolher</b> ou arraste aqui a planilha<br><small>Contrato de equipamentos (.xlsx) · aba com TAG (col. A), descrição (col. B), fornecimento (col. D), qtd (col. G); aba "Serviços por TAG" opcional</small></label>
       <div class="ax-note" style="margin-top:10px">O saldo de cada equipamento usa o Mapa de Suprimentos anexado acima.</div>
       <button class="btn" id="eqReset">Voltar à lista embutida no HTML</button>
@@ -397,7 +397,7 @@ var PRESET={"ctrlCabos.estoque":"{\"P35\":900,\"B2.1\":300}","ctrlCabos.tel.udaE
 'use strict';
 var SRC0='<!doctype html>\n'+document.documentElement.outerHTML;
 var RO=/github\.io$/i.test(location.hostname)&&!/editar/i.test(location.hash); if(RO) document.body.classList.add('ro');
-var VER='19/11/2026 12:01'; try{ if(localStorage.getItem('ctrlCabos.ver')!==VER){ Object.keys(PRESET||{}).forEach(function(k){ localStorage.removeItem(k); }); ['ctrlCabos.dados','ctrlCabos.tel.dados','ctrlCabos.mapa','ctrlCabos.alm','ctrlCabos.eq','ctrlCabos.pc','ctrlCabos.bi','ctrlCabos.ultimaCarga','ctrlCabos.tel.ultimaCarga'].forEach(function(k){ localStorage.removeItem(k); }); localStorage.setItem('ctrlCabos.ver',VER); } }catch(e){}
+var VER='19/11/2026 12:07'; try{ if(localStorage.getItem('ctrlCabos.ver')!==VER){ Object.keys(PRESET||{}).forEach(function(k){ localStorage.removeItem(k); }); ['ctrlCabos.dados','ctrlCabos.tel.dados','ctrlCabos.mapa','ctrlCabos.alm','ctrlCabos.eq','ctrlCabos.pc','ctrlCabos.bi','ctrlCabos.ultimaCarga','ctrlCabos.tel.ultimaCarga'].forEach(function(k){ localStorage.removeItem(k); }); localStorage.setItem('ctrlCabos.ver',VER); } }catch(e){}
 if(/github\.io$/i.test(location.hostname)&&window.fetch){ try{ fetch(location.pathname+'?nc='+Date.now(),{cache:'no-store'}).then(function(r){ return r.ok?r.text():''; }).then(function(t){ var m=/var VER='([^']*)'/.exec(t||''); if(m&&m[1]!==VER){ var k='ctrlCabos.reload'; if(sessionStorage.getItem(k)===m[1]) return; sessionStorage.setItem(k,m[1]); location.replace(location.pathname+'?v='+encodeURIComponent(m[1].replace(/\D/g,''))+location.hash); } }).catch(function(){}); }catch(e){} }
 function lsGet(k){ var v=null; if(!(RO&&/(udaEdits|pcEdits|estoque|consag|dados|mapa|eqcons|\.eq)$/.test(k))){ try{ v=localStorage.getItem(k); }catch(e){} } if(v==null&&PRESET&&Object.prototype.hasOwnProperty.call(PRESET,k)) v=PRESET[k]; return v; }
 function up(s){ return String(s==null?'':s).trim().toUpperCase(); }
@@ -468,7 +468,7 @@ var CFG_INST={inst:1,slug:'instrumentacao',aba:'CABOS',kp:'ctrlCabos.',NUMC:{3:1
   fill:function(r){ var o=r.slice(); if(!o[14]) o[14]='C1N_RNEST_U12_6.17.39.1_INS_CTECRI_'+o[0]; if(!o[16]) o[16]='C1N_RNEST_U12_6.17.39.1_INS_RILTCI_'+o[0]; return o; },
   concl:function(u){ return u==='CONCLUIDO'; }, ist:9, ip:3, ir:4, ifam:18, ite:7, hay:[0,1,2,10,11,12,13,18,19], pills:[5,7,8,9,15,17],
   opts:function(){ return {9:[['','Pendente'],['CONCLUIDO','CONCLUIDO']],7:['PENDENTE','APROVADO','REPROVADO'],15:['NÃO POSTADO','Em análise','Aprovado','Reprovado'],17:['NÃO POSTADO','Em análise','Aprovado','Reprovado']}; }, parse:parseUDA};
-var CFG_TEL={inst:0,alm:1,slug:'telecom',aba:'CABOS TCOM',kp:'ctrlCabos.tel.',NUMC:{8:1,10:1},COLS:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
+var CFG_TEL={inst:0,alm:1,slug:'telecom',aba:'CABOS TCOM',kp:'ctrlCabos.tel.',NUMC:{8:1,10:1},roHide:[15,16,17,18],COLS:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18],
   H:['No. CIRCUITO','DE','PARA','SIST.','CIRC.','CLASSE ISOL. (kV)','DESCRIÇÃO CABO','LOCALIZAÇÃO','PROJETO (m)','STATUS LANÇAMENTO','METRAGEM REAL (m)','STATUS TESTE','PROGRAMAÇÃO','UNIDADE','LISTA DE CABOS','REQUISIÇÃO DE MATERIAIS (RM)','CÓDIGO CONSAG','SUPRIMENTO (m)','SCON'],
   GRP:['','','','','','','','','g2','g2','g2','g2','g3','','','','','',''],
   fill:function(r){ return r.slice(); }, concl:function(u){ return /^CONCLU.DO$/.test(u); }, ist:9, ip:8, ir:10, ifam:6, ite:11, hay:[0,1,2,6,7,12,13,14,18], pills:[9,11],
@@ -483,7 +483,7 @@ function today(){ var d=new Date(); d.setMinutes(d.getMinutes()-d.getTimezoneOff
 var H0=['CABO Nº','ORIGEM','DESTINO','PROJETO (m)','METRAGEM REAL (m)','STATUS LANÇAMENTO','REAL BASE FELIPE','STATUS TESTE','AVANÇO MANUAL','AVANÇO LANÇAMENTO','BOBINA PREVISTA','BOBINA REAL','DOCUMENTOS (DE-5290.00-22111-800-CHZ)','LISTA DE CABOS','CABO RELATÓRIO CTECRI','STATUS SIGEM','CABO RELATÓRIO RILTCI','STATUS SIGEM 2','FORMAÇÃO','ALTERAÇÃO'];
 var GRP0=['','','','','g2','g2','g2','g2','g2','g2','g3','g3','','','g4','g4','g4','g4','',''];
 var H=C.H||H0, GRP=C.GRP||GRP0, NUMC=C.NUMC;
-var COLS=C.COLS;
+var COLS=C.COLS; if(RO&&C.roHide) COLS=COLS.filter(function(c){ return C.roHide.indexOf(c)<0; });
 var CARGA=null; try{ var st0=JSON.parse(lsGet(KP+'dados')||'null'); if(st0&&st0.uda&&st0.uda.length){ CARGA=st0; DATA.uda=st0.uda; if(st0.fam&&Object.keys(st0.fam).length) DATA.fam=st0.fam; DATA.fontes.uda=st0.nome; } }catch(e){}
 var ROWS=DATA.uda.map(C.fill);
 var FAMD=DATA.fam||{};
@@ -1032,4 +1032,5 @@ SECS['']=SECTION('',DATA,CFG_INST);
 SECS.t=SECTION('t',TDATA,CFG_TEL);
 (function(){ var v='uda'; try{ v=localStorage.getItem('ctrlCabos.view')||'uda'; }catch(e){} show(v); })();
 })();
-</script></body></html>
+</script>
+</body></html>
